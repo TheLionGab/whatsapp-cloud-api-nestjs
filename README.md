@@ -35,7 +35,9 @@ Erros têm sempre o formato `{ "error": { "code", "message" } }`
   - `ConfigModule` (`src/config/`): global; lê o ambiente, valida com Zod e
     expõe a config pelo token `APP_CONFIG`.
   - `LoggingModule` (`src/logging/`): `nestjs-pino`, com
-    `authorization` e `x-hub-signature-256` mascarados no log de requisição.
+    `authorization`, `cookie` e `x-hub-signature-256` mascarados, e a URL
+    gravada só com o caminho (a query de `GET /webhook` traz o
+    `hub.verify_token` e não vai para o log).
   - `WhatsappModule` (`src/whatsapp/`): envio e webhook.
 - Controllers: `HealthController`, `WebhookController`, `MessagesController`.
 - Provider externo: `WhatsappService` (fala com a Graph API). O `fetch`

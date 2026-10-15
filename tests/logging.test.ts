@@ -47,5 +47,18 @@ describe("logging", () => {
     const headers = (reqLog?.["req"] as { headers: Record<string, string> }).headers;
     expect(headers["authorization"]).toBe("[Redacted]");
     expect(headers["x-hub-signature-256"]).toBe("[Redacted]");
+
+    // GET /webhook leva o verify token na query: nem a URL nem a query vão para o log.
+    lines.length = 0;
+    await request(app.getHttpServer())
+      .get("/webhook")
+      .query({ "hub.mode": "subscribe", "hub.verify_token": "segredo", "hub.challenge": "abc" })
+      .set("Cookie", "sessao=cookie-secreto");
+    await new Promise((r) => setTimeout(r, 50));
+    const verify = lines.join("");
+    expect(verify).toContain('"url":"/webhook"');
+    expect(verify).not.toContain("hub.verify_token");
+    expect(verify).not.toContain("segredo");
+    expect(verify).not.toContain("cookie-secreto");
   });
 });
