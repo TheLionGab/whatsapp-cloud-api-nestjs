@@ -1,7 +1,7 @@
 {
-  "name": "whatsapp-cloud-api-nestjs",
+  "name": "whatsapp-gateway-nestjs",
   "version": "0.1.0",
-  "description": "Porte NestJS do serviço WhatsApp Business Cloud API (Meta): envio de texto + webhook",
+  "description": "NestJS implementation of the WhatsApp gateway: guards, Zod pipes, exception filters and provider injection. 23 tests.",
   "license": "MIT",
   "type": "module",
   "packageManager": "npm@11.17.0",
